@@ -1,5 +1,5 @@
 # Server-Status-Monitor
-Monitor the specified Server/site status for UP and DOWN as well as current system internet connectivity.
+Its a Console application in C++, Monitor the specified Server/site status for UP and DOWN as well as current system internet connectivity.
 
 #Extra features
 1- Coloring according to server status / connectivity
