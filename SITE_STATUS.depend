@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1463334306 source:d:\workspace\z-my-extra-workshop\cpp\site_status\main.cpp
+	<iostream>
+	<string.h>
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+
