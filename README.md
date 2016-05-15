@@ -11,6 +11,6 @@ Monitor the specified Server/site status for UP and DOWN as well as current syst
 
 #Screenshots
 
-![alt tag](./1.png)
-![alt tag](./2.png)
-![alt tag](./3.png)
+![alt tag](./1.PNG)
+![alt tag](./2.PNG)
+![alt tag](./3.PNG)
