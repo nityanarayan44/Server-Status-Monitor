@@ -1,6 +1,8 @@
 /*
 *@Author: Ashutosh Mishra
 *@Title: SERVER/SITE STATUS CONNECTIVITY [ONLINE/OFFLINE]
+*@Description: Single Server status monitor [Console based c application].
+                For Multi-server status monitoring check my [MonitorServerStatus] other application[Web Application].
 *@STARTED: 14/05/2016
 *@Date Completed: 14/05/2016
 *@Place: Gurgaon (Gurugram)
