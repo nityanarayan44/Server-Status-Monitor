@@ -4,6 +4,9 @@
 *@STARTED: 14/05/2016
 *@Date Completed: 14/05/2016
 *@Place: Gurgaon (Gurugram)
+=================================
+Re-Edited: 20-12-2016, 23:04 IST
+=================================
 */
 
 #include <iostream>
@@ -24,13 +27,13 @@ using namespace std;
 
 //TEMPLATES
 void errorSound(){
-    _beep(350,100);
-    _beep(900,500);
-    _beep(500,100);
+    _beep(900,150);
 }
 void soundInternetConnected() /* Beep a sound when error occur. */{
     //_beep(1800,100);
-    _beep(900,150);
+    _beep(350,100);
+    _beep(900,500);
+    _beep(500,100);
 }
 
 void soundNotConnectedToInternet(){
@@ -49,14 +52,18 @@ void formCommand(){
         for(i=0; i<CMD.length(); i++){
             QUERY[i] = CMD.at(i);
         }
+        //Command like: ping site -n 1
         QUERY[i] = ' '; QUERY[i+1] = '-'; QUERY[i+2] = 'n'; QUERY[i+3] = ' '; QUERY[i+4] = '1';
+        //piping extra clear screen command to clear the screen along with ping
+        //Like: pingCommand | cls
+        /* QUERY[i+5] = ' '; QUERY[i+6] = '|';QUERY[i+7] = ' ';QUERY[i+8] = 'c';QUERY[i+9] = 'l';QUERY[i+10] = 's';*/
 
-    cout << " Command Formed successfully. ";
+    cout << " Command Formed successfully. \n Enter to proceed...";
     getch();
 }
 
 void statusOutput(char* msgSiteStatus, char* msgInternetConnectivity){
-
+    //Output Format for Server status.
     char *str="";
     int loop=0,asc_val=220,asc_val2=219;
     cout << "\n\t";
@@ -93,44 +100,42 @@ int start()
 
     //Extracting and forming the command.
     formCommand();
-    system("ECHO OFF");
+    //system("@echo off");
     system("COLOR 0");
     system("TITLE SERVER/SITE MONITORING");
 
     //Checking Site status until any button pressed.
     while(!kbhit()){
 
-        int status = system(QUERY);
-        system("CLS");
-
-        //Making system call
+        //Output: System Status
         statusOutput(SiteStatus, InternetConnection);
 
-        if(status!=0){SiteStatus = "OFFLINE"; system("COLOR 4"); }else{SiteStatus = "ONLINE"; system("COLOR 2"); }
-        if((system("PING google.com -n 1 && CLS"))==0){
-            InternetConnection = "ONLINE";
-            system("COLOR 2");
-            //soundInternetConnected();
+        //Checking status for given server...
+        if(system(QUERY)!=0){
+                SiteStatus = "OFFLINE :-("; 
+                system("COLOR 4");
+                errorSound();
+                cout << "\n\t NOT CONNECTED !!!\n\t Reconnecting... \n\t";
+                Failure++;
+        }else{
+                SiteStatus = "ONLINE ;-)"; system("COLOR 2");
+        }
+
+        //Checking status for Internet connection.. targeting google.com
+        if((system("PING google.com -n 1 | CLS"))==0){
+                InternetConnection = "ONLINE"; 
+                /*system("COLOR 2");*/
         } else {
-            InternetConnection = "OFFLINE";
-            system("COLOR 4");
-            soundNotConnectedToInternet();
+                InternetConnection = "OFFLINE"; 
+                /*system("COLOR 4");*/ 
+                soundNotConnectedToInternet();
         }
 
-        //Making system call
-        statusOutput(SiteStatus, InternetConnection);
-
-        //cout << "|   [" << SITE << " ] ----------------------------------- [ SITE " << ((status!=0)?"OFFLINE":"ONLINE") << " ]" << endl;
-        if(status != 0){
-            //errorSound();
-            cout << "Trying to Connect...\n\t";
-            Failure++;
-        }
-        else {
-            //errorSound();
-            soundInternetConnected();
-        }
+        //Counting overall ping request...
         Count++;
+        
+        //Wait if you want to iterate in a interval.
+        //_sleep(1000);
     }
 
     getch();
@@ -143,6 +148,8 @@ int main(){
     //soundNotConnectedToInternet();
     //errorSound();
 
-    start();
+    //Start point
+        start();
+
     return 0;
 }
